@@ -1,13 +1,17 @@
 dockerweb
 =========
 
-*web manager for docker*
+web manager for docker
+----------------------
 
 snapshot
 
 <img src="./snapshot.png" />
 
-*build war:*
+-----------------------------------------
+
+build war:
+-----------
 
 1. git pull
 
