@@ -13,7 +13,7 @@ snapshot
 build war:
 -----------
 
-1. git pull
+1. git clone 
 
 2. mvn eclipse:eclipse
 
