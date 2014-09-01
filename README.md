@@ -21,4 +21,10 @@ build war:
 
 4. mvn package -Dmaven.test.skip=true
 
+5. deploy dockerweb.war to tomcat/jetty/...
+
+6. visit web from browser http://localhost:8080/dockerweb
+
+7. user/password  docker/docker
+
 
