@@ -25,6 +25,6 @@ build war:
 
 6. visit web from browser http://localhost:8080/dockerweb
 
-7. user/password  docker/docker
+7. user/password:  docker/docker
 
 
