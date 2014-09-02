@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
-<jsp:include page="./common/mate-title.jsp" />
+<jsp:include page="../common/mate-title.jsp" />
 </head>
 <body>
 	<div class="container">
@@ -49,7 +49,7 @@
 	</div>
 	<div class="modal fade" id="myModal"></div>
 	<!-- javascript -->
-	<c:import url="./common/mate-footer.jsp" />
+	<c:import url="../common/mate-footer.jsp" />
 	<script type="text/javascript">
 		$(function() {
 			var url = location.href;

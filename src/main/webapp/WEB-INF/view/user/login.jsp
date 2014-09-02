@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="zh_CN">
 <head>
-<c:import url="./common/mate-title.jsp" />
+<c:import url="../common/mate-title.jsp" />
 <link href="${base}/css/signin.css" rel="stylesheet">
 </head>
 <body>
@@ -27,6 +27,6 @@
 			</div>
 		</form>
 	</div>
-	<c:import url="./common/mate-footer.jsp" />
+	<c:import url="../common/mate-footer.jsp" />
 </body>
 </html>
