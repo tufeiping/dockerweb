@@ -71,4 +71,12 @@ public class Images {
         return "redirect:/images/list";
     }
 
+    @RequestMapping("/{name1:.*}/{name2:.*}/delete")
+    public String specNameDelete(@PathVariable String name1,
+            @PathVariable String name2) {
+        String imageName = String.format("%s/%s", name1, name2);
+        imageSrv.imageDelete(imageName);
+        log.info(String.format("delete image %s", imageName));
+        return "redirect:/images/list";
+    }
 }
