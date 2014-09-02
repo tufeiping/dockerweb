@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<c:import url="./common/nav.jsp" />
+		<c:import url="../common/nav.jsp" />
 		<div class="stub"></div>
 		<div class="col-lg-4 col-lg-offset-4">
 			<div class="form-group">

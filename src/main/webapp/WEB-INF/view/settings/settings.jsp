@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<c:import url="./common/nav.jsp" />
+		<c:import url="../common/nav.jsp" />
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading"></div>
