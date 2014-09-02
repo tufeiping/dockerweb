@@ -30,6 +30,6 @@ public class Index {
             else
                 return "redirect:/settings?config=true";
         } else
-            return "login";
+            return "user/login";
     }
 }

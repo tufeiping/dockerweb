@@ -41,7 +41,7 @@ public class Users {
 
     @RequestMapping(method = RequestMethod.GET)
     public String info() {
-        return "user";
+        return "user/user";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -56,7 +56,7 @@ public class Users {
     }
 
     @RequestMapping(value = "/logout")
-    public String login(HttpServletRequest request) {
+    public String logout(HttpServletRequest request) {
         Utils.removeUser(request);
         log.info("user logout");
         return "redirect:/index";

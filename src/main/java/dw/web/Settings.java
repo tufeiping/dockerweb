@@ -32,7 +32,7 @@ public class Settings {
     public String setting(Model model) {
         HostPort hostPort = settingSrv.getHostPort();
         model.addAttribute("hostport", hostPort);
-        return "settings";
+        return "settings/settings";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -48,6 +48,6 @@ public class Settings {
     public String dockerInfo(Model model) {
         model.addAttribute("info", settingSrv.info());
         model.addAttribute("version", settingSrv.version());
-        return "info";
+        return "settings/info";
     }
 }
