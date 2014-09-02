@@ -28,3 +28,7 @@ build war:
 7. user/password:  docker/docker
 
 
+NOTICE:
+-----------
+github: <https://github.com/sunnytu/dockerweb>
+oschina: <http://git.oschina.net/sunnytu/dockerweb> 
