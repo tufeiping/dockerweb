@@ -1,5 +1,6 @@
 package dw.utils;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,5 +55,9 @@ public class Utils {
     public static String formatDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         return sdf.format(date);
+    }
+
+    public static File getDockerFolder(String projectName) {
+        return new File(Constants.APPath() + "/uploads/" + projectName);
     }
 }

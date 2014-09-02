@@ -1,11 +1,11 @@
 package dw.services;
 
-import java.io.StringReader;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.input.ReaderInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -31,6 +31,9 @@ public class ProjectService {
 
     @Autowired
     private DockerService docker;
+
+    @Autowired
+    private FileService fileSrv;
 
     public List list() {
         return jdbc.queryForList(" select * from packages ");
@@ -69,16 +72,21 @@ public class ProjectService {
         if (rec == null)
             return;
         String image = (String) rec.get("image");
+        String projectName = (String) rec.get("name");
         DockerClient cli = docker.getDockerClient();
         if (cli == null)
             return;
-        if (image != null) {
+        if (image != null && !"".equals(image)) {
             cli.pullImageCmd(image).withTag(imageTag).exec();
         } else {
-            String dockerfile = (String) rec.get("note");
-            cli.buildImageCmd(
-                    new ReaderInputStream(new StringReader(dockerfile)))
-                    .withRemove(true).withTag(imageTag).exec();
+            String dockerFileContent = (String) rec.get("note");
+            try {
+                File folder = Utils.getDockerFolder(projectName);
+                fileSrv.saveDockerFile(folder, dockerFileContent);
+                cli.buildImageCmd(folder).withTag(imageTag).exec();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
