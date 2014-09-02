@@ -73,12 +73,12 @@ public class ProjectService {
         if (cli == null)
             return;
         if (image != null) {
-            cli.pullImageCmd(imageTag).exec();
+            cli.pullImageCmd(image).withTag(imageTag).exec();
         } else {
             String dockerfile = (String) rec.get("note");
             cli.buildImageCmd(
                     new ReaderInputStream(new StringReader(dockerfile)))
-                    .withRemove(true).exec();
+                    .withRemove(true).withTag(imageTag).exec();
         }
     }
 }

@@ -93,7 +93,7 @@
 						location.href = "${base}/images/list";
 					});
 				},
-				title : '请输入镜像名<input id="imgname" />&nbsp;然后点击“确定”创建'
+				title : '请输入镜像名<input id="imgname" placeholder="请输入小写英文标题"/>&nbsp;然后点击“确定”创建'
 			});
 		});
 	</script>
