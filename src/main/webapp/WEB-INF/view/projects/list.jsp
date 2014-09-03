@@ -51,6 +51,7 @@
 		aria-labelledby="myModalLabel" aria-hidden="true"></div>
 	<!-- javascript -->
 	<c:import url="../common/mate-footer.jsp" />
+	<script src="${base}/js/jquery.ui.widget.js"></script>
 	<script src="${base}/js/jquery.fileupload.js"></script>
 	<script type="text/javascript">
 		$(function() {
@@ -78,23 +79,25 @@
 									});
 								});
 					});
-			$(".project_build").balert({
-				cb : function(obj) {
-					var imgname = $("#imgname").val();
-					if (imgname == '')
-						return $.balert({
-							type : 'alert',
-							title : '没有输入镜像名，请重新操作。'
-						});
-					$.post("${base}/projects/build", {
-						id : obj.attr("data"),
-						imgtag : imgname
-					}, function(data) {
-						location.href = "${base}/images/list";
-					});
-				},
-				title : '请输入镜像名<input id="imgname" placeholder="请输入小写英文标题"/>&nbsp;然后点击“确定”创建'
-			});
+			$(".project_build")
+					.balert(
+							{
+								cb : function(obj) {
+									var imgname = $("#imgname").val();
+									if (imgname == '')
+										return $.balert({
+											type : 'alert',
+											title : '没有输入镜像名，请重新操作。'
+										});
+									$.post("${base}/projects/build", {
+										id : obj.attr("data"),
+										imgtag : imgname
+									}, function(data) {
+										location.href = "${base}/images/list";
+									});
+								},
+								title : '请输入镜像名<input id="imgname" placeholder="请输入小写英文标题"/>&nbsp;然后点击“确定”创建'
+							});
 		});
 	</script>
 </body>

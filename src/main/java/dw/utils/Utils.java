@@ -58,6 +58,6 @@ public class Utils {
     }
 
     public static File getDockerFolder(String projectName) {
-        return new File(Constants.APPath() + "/uploads/" + projectName);
+        return new File(Constants.UploadPath() + projectName);
     }
 }
