@@ -1,5 +1,6 @@
 package dw.services;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.InspectImageResponse;
 import com.github.dockerjava.api.model.Image;
+
+import dw.api.DockerCommand;
+import dw.api.SaveImageCmdImpl;
 
 /**
  * ImageService.java <br>
@@ -38,19 +42,14 @@ public class ImageService {
         return cli.inspectImageCmd(name).exec();
     }
 
-    public void imageDelete(String name) {
+    public void delete(String name) {
         DockerClient cli = docker.getDockerClient();
         if (cli == null)
             return;
         cli.removeImageCmd(name).exec();
     }
 
-    public String imageBuild(byte[] content) {
-        // return http.postBuild(Constants.getDockerPath() + "/build", content);
-        return null;
-    }
-
-    public void imageTag(String id, String tag) {
+    public void tag(String id, String tag) {
         DockerClient cli = docker.getDockerClient();
         if (cli == null)
             return;
@@ -59,5 +58,10 @@ public class ImageService {
             cli.tagImageCmd(id, tags[0], tags[1]).exec();
         else
             cli.tagImageCmd(id, tag, null).exec();
+    }
+
+    public InputStream save(String id) {
+        DockerCommand sici = new SaveImageCmdImpl(docker.getDockerPath());
+        return (InputStream) sici.exec(id);
     }
 }

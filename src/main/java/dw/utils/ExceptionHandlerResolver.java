@@ -24,7 +24,7 @@ public class ExceptionHandlerResolver implements HandlerExceptionResolver {
             HttpServletResponse response, Object handler, Exception ex) {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("ex", ex);
-        return new ModelAndView("error", model);
+        return new ModelAndView("common/error", model);
     }
 
 }

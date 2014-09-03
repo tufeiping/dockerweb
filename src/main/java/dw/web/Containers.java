@@ -1,7 +1,11 @@
 package dw.web;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.github.dockerjava.api.command.InspectContainerResponse;
 
@@ -116,5 +123,38 @@ public class Containers {
         }
         model.addAttribute("log", log);
         return "containers/log";
+    }
+
+    @RequestMapping("/{id}/export")
+    public void export(@PathVariable String id, HttpServletResponse response)
+            throws IOException {
+        InputStream input = containerSrv.export(id);
+        response.setContentType("application/x-tar");
+        response.setHeader("Content-disposition",
+                "attachment; filename=\"con_export.tar\"");
+        IOUtils.copy(input, response.getOutputStream());
+    }
+
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
+    public String importGet() {
+        return "containers/import";
+    }
+
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
+    public String importPost(@RequestParam("name") String name,
+            MultipartHttpServletRequest request) {
+        MultipartFile file = request.getFile("file");
+        if (file != null) {
+            InputStream stream;
+            try {
+                stream = file.getInputStream();
+                if (stream != null) {
+                    containerSrv.tarImport(name, file.getInputStream());
+                }
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+        return "redirect:/containers/list";
     }
 }

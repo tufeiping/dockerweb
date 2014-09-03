@@ -58,6 +58,9 @@
 							<button class="btn btn-danger btn-xs image_delete"
 								data="${image.repoTags[0]}">删除</button>
 							<button class="btn btn-info btn-xs image_tag" data="${image.id}">命名</button>
+							<button class="btn btn-default btn-xs image-save" role="button"
+								data="${image.id }">保存</button>
+						</td>
 						</td>
 					</tr>
 				</c:forEach>
@@ -109,6 +112,10 @@
 						show : true
 					});
 				});
+			});
+			$(".image-save").balert({
+				url: function(obj) {return "${base}/images/" + obj.attr("data") + "/save"},
+				title: '保存镜像资源会占用比较多磁盘空间，是否需要保存镜像？'
 			});
 		});
 	</script>

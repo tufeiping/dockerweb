@@ -2,6 +2,7 @@ package dw.services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,9 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.api.model.Ports.Binding;
 
+import dw.api.DockerCommand;
+import dw.api.ExportContainerCmdImpl;
+import dw.api.ImportContainerCmdImpl;
 import dw.utils.Constants;
 
 /**
@@ -119,6 +123,16 @@ public class ContainerService {
             sb.append(line).append("\n");
         }
         return sb.toString();
+    }
+
+    public InputStream export(String id) {
+        DockerCommand cmd = new ExportContainerCmdImpl(docker.getDockerPath());
+        return (InputStream) cmd.exec(id);
+    }
+
+    public void tarImport(String name, InputStream input) {
+        DockerCommand icci = new ImportContainerCmdImpl(docker.getDockerPath());
+        icci.exec(name, input);
     }
 
     /**

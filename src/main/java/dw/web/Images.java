@@ -1,5 +1,11 @@
 package dw.web;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +59,7 @@ public class Images {
     @RequestMapping("/tag")
     public @ResponseBody String tagImage(@RequestParam(value = "id") String id,
             @RequestParam(value = "tag") String tag) {
-        imageSrv.imageTag(id, tag);
+        imageSrv.tag(id, tag);
         log.info(String.format("tag image %s to %s", id, tag));
         return "ok";
     }
@@ -64,9 +70,23 @@ public class Images {
         return "images/tag";
     }
 
+    @RequestMapping("/{id}/save")
+    public void save(@PathVariable String id, HttpServletResponse response) {
+        InputStream input = imageSrv.save(id);
+        log.info(String.format("save image %s", id));
+        response.setContentType("application/x-tar");
+        response.setHeader("Content-disposition",
+                "attachment; filename=\"img_save.tar\"");
+        try {
+            IOUtils.copy(input, response.getOutputStream());
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
     @RequestMapping("/{name}/delete")
     public String delete(@PathVariable String name) {
-        imageSrv.imageDelete(name);
+        imageSrv.delete(name);
         log.info(String.format("delete image %s", name));
         return "redirect:/images/list";
     }
@@ -75,7 +95,7 @@ public class Images {
     public String specNameDelete(@PathVariable String name1,
             @PathVariable String name2) {
         String imageName = String.format("%s/%s", name1, name2);
-        imageSrv.imageDelete(imageName);
+        imageSrv.delete(imageName);
         log.info(String.format("delete image %s", imageName));
         return "redirect:/images/list";
     }

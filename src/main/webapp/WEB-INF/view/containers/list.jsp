@@ -29,7 +29,8 @@
 						<th>镜像</th>
 						<th class="hidden-xs">创建日期</th>
 						<th>状态</th>
-						<th><span class="glyphicon glyphicon-cog"></span>&nbsp;操作</th>
+						<th><span class="glyphicon glyphicon-cog"></span>&nbsp;操作&nbsp;&nbsp;
+							<!-- button class="btn btn-info btn-xs container-import" >导入镜像</button--></th>
 					</tr>
 				</thead>
 				<c:forEach items="${list}" var="container">
@@ -57,7 +58,9 @@
 							<button class="btn btn-default btn-xs container-commit"
 								role="button" data="${container.id }">提交</button>
 							<button class="btn btn-default btn-xs container-log"
-								role="button" data="${container.id }">LOG</button></td>
+								role="button" data="${container.id }">LOG</button>
+							<!-- button class="btn btn-default btn-xs container-export"
+								role="button" data="${container.id }">导出</button--></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -106,6 +109,20 @@
 				title: '容器提交后会成为镜像，是否需要提交容器？'
 			});
 			
+			$(".container-export").balert({
+				url: function(obj) {return "${base}/containers/" + obj.attr("data") + "/export"},
+				title: '保存容器导出资源会占用比较多磁盘空间，是否需要导出容器？'
+			});
+			
+			$(".container-import").click(function(){
+				$.get("${base}/containers/import", function(data) {
+					$("#myModal").html(data).modal({
+						backdrop: true,
+						show: true
+					});
+				});
+			});
+			
 			$(".container-info").click(function() {
 				var containerId = $(this).attr("data");
 				$.get("${base}/containers/" + containerId + "/info", function(data) {
@@ -115,6 +132,7 @@
 					});
 				});
 			});
+			
 			$(".container-log").click(function(){
 				var containerId = $(this).attr("data");
 				$.get("${base}/containers/" + containerId + "/log", function(data){
