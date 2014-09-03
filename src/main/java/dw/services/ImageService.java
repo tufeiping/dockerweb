@@ -58,6 +58,6 @@ public class ImageService {
         if (tags.length == 2)
             cli.tagImageCmd(id, tags[0], tags[1]).exec();
         else
-            cli.tagImageCmd(id, "untitled", tag).exec();
+            cli.tagImageCmd(id, tag, null).exec();
     }
 }

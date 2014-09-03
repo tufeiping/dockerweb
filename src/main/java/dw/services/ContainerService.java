@@ -19,6 +19,8 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.api.model.Ports.Binding;
 
+import dw.utils.Constants;
+
 /**
  * ContainerService.java <br>
  * comment
@@ -108,7 +110,9 @@ public class ContainerService {
         if (cli == null)
             return null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(cli
-                .logContainerCmd(id).withFollowStream().exec()));
+                .logContainerCmd(id).withStdErr().withStdOut().withTimestamps()
+                .exec(), Constants.DEFAULT_ENCODING)); // bugfix: add stream to
+                                                       // cmd
         StringBuilder sb = new StringBuilder();
         String line = null;
         while ((line = reader.readLine()) != null) {
@@ -125,8 +129,7 @@ public class ContainerService {
      * @param cmd
      * @param ports
      */
-    public void create(String image, String name, String cmd,
-            String ports) {
+    public void create(String image, String name, String cmd, String ports) {
         DockerClient cli = docker.getDockerClient();
         if (cli == null)
             return;

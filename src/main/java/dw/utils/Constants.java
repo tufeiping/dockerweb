@@ -16,6 +16,8 @@ public class Constants {
 
     public static final String CONTEXT_USER = "docker_web_user";
 
+    public static final String DEFAULT_ENCODING = "utf-8";
+
     public static String RootPath() {
         String url = URL.toString();
         String path = url.substring(6, url.length());
