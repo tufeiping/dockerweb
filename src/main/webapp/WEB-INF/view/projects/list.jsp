@@ -15,7 +15,7 @@
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading"></div>
-			<table class="table table-hover">
+			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th>项目名</th>
